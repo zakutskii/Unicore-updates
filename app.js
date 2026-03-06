@@ -15,10 +15,19 @@ function fmtDate(value) {
 }
 
 function setStatus(text) {
-  statusEl.textContent = text;
+  if (statusEl) statusEl.textContent = text;
+}
+
+function showError(message) {
+  if (!releasesRoot) return;
+  releasesRoot.replaceChildren();
+  const errorEl = document.createElement("p");
+  errorEl.textContent = message;
+  releasesRoot.appendChild(errorEl);
 }
 
 function renderReleases(items) {
+  if (!releasesRoot || !template) return;
   releasesRoot.replaceChildren();
 
   if (!items.length) {
@@ -51,29 +60,48 @@ function renderReleases(items) {
   }
 }
 
+async function fetchReleases() {
+  const accepts = [
+    "application/vnd.github.html+json",
+    "application/vnd.github+json",
+  ];
+
+  let lastError;
+
+  for (const accept of accepts) {
+    const response = await fetch(API_URL, {
+      headers: { Accept: accept },
+    });
+
+    if (response.ok) {
+      const releases = await response.json();
+      if (Array.isArray(releases)) return releases;
+      lastError = new Error("Unexpected API payload");
+      continue;
+    }
+
+    const remaining = response.headers.get("x-ratelimit-remaining");
+    const reset = response.headers.get("x-ratelimit-reset");
+    if (response.status === 403 && remaining === "0" && reset) {
+      const resetAt = new Date(Number(reset) * 1000).toLocaleTimeString();
+      throw new Error(`GitHub API rate limit reached. Try again after ${resetAt}.`);
+    }
+
+    lastError = new Error(`GitHub API error: ${response.status}`);
+  }
+
+  throw lastError || new Error("Failed to fetch releases");
+}
+
 async function loadReleases() {
   try {
     setStatus("Loading releases...");
-
-    const response = await fetch(API_URL, {
-      headers: {
-        // Ask GitHub for release markdown already rendered to sanitized HTML.
-        Accept: "application/vnd.github.html+json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status}`);
-    }
-
-    const releases = await response.json();
-    renderReleases(Array.isArray(releases) ? releases : []);
+    const releases = await fetchReleases();
+    renderReleases(releases);
     setStatus(`Last updated: ${new Date().toLocaleTimeString()}`);
   } catch (error) {
-    releasesRoot.replaceChildren();
-    const message = document.createElement("p");
-    message.textContent = `Failed to load releases: ${error.message}`;
-    releasesRoot.appendChild(message);
+    const reason = error instanceof Error ? error.message : String(error);
+    showError(`Failed to load releases: ${reason}`);
     setStatus("Error loading releases");
   }
 }
