@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Host+Grotesk:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&family=Host+Grotesk:wght@400&display=swap");
 
 :root {
   --bg: #000000;
   --panel: #000000;
   --text: #e9eef9;
-  --muted: #9db0d2;
+  --muted: #858585;
   --accent: #3ad1a8;
   --border: rgba(255, 255, 255, 0.12);
 }
@@ -26,6 +26,7 @@ body {
 .hero h1 {
   margin: 0;
   font-family: "Host Grotesk", "Segoe UI", sans-serif;
+  font-weight: 400;
   font-size: 56px;
   line-height: 1.1;
 }
@@ -36,13 +37,6 @@ body {
   border-radius: 24px;
   background: var(--panel);
   padding: 1rem;
-}
-
-.panel-head {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
 }
 
 .releases {
@@ -61,14 +55,15 @@ body {
   margin: 0;
   font-size: 1.1rem;
   font-family: "Host Grotesk", "Segoe UI", sans-serif;
+  font-weight: 400;
 }
 
-.panel-head h2,
 .notes h1,
 .notes h2,
 .notes h3,
 .notes h4 {
   font-family: "Host Grotesk", "Segoe UI", sans-serif;
+  font-weight: 400;
 }
 
 .release-link {
