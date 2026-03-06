@@ -106,9 +106,67 @@ body {
 }
 
 .notes {
-  white-space: pre-wrap;
-  overflow-x: auto;
   margin: 0;
   color: #d4e0f9;
+  line-height: 1.55;
+}
+
+.notes > *:first-child {
+  margin-top: 0;
+}
+
+.notes > *:last-child {
+  margin-bottom: 0;
+}
+
+.notes h1,
+.notes h2,
+.notes h3,
+.notes h4 {
+  margin: 1rem 0 0.45rem;
+  line-height: 1.25;
+}
+
+.notes p,
+.notes ul,
+.notes ol,
+.notes blockquote {
+  margin: 0.55rem 0;
+}
+
+.notes ul,
+.notes ol {
+  padding-left: 1.2rem;
+}
+
+.notes a {
+  color: #7fd9ff;
+}
+
+.notes code {
   font-family: "IBM Plex Mono", ui-monospace, monospace;
+  background: #1b2740;
+  border-radius: 6px;
+  padding: 0.1rem 0.3rem;
+}
+
+.notes pre {
+  overflow-x: auto;
+  background: #0a1220;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+}
+
+.notes pre code {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+}
+
+.notes blockquote {
+  margin-left: 0;
+  border-left: 3px solid var(--accent);
+  padding-left: 0.7rem;
+  color: #c8d8f4;
 }

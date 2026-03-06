@@ -42,7 +42,12 @@ function renderReleases(items) {
     const published = release.published_at ? fmtDate(release.published_at) : "unknown date";
     meta.textContent = `${tag} • published ${published}`;
 
-    notes.textContent = (release.body || "No release notes.").trim();
+    const markdownHtml = release.body_html || "";
+    if (markdownHtml.trim()) {
+      notes.innerHTML = markdownHtml;
+    } else {
+      notes.textContent = (release.body || "No release notes.").trim();
+    }
     releasesRoot.appendChild(node);
   }
 }
@@ -54,7 +59,8 @@ async function loadReleases() {
 
     const response = await fetch(API_URL, {
       headers: {
-        Accept: "application/vnd.github+json",
+        // Ask GitHub for release markdown already rendered to sanitized HTML.
+        Accept: "application/vnd.github.html+json",
       },
     });
 
