@@ -13,14 +13,31 @@
 
 body {
   margin: 0;
+  min-height: 100vh;
+  position: relative;
   font-family: "DM Sans", "Segoe UI", sans-serif;
   color: var(--text);
   background: var(--bg);
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.22;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  mix-blend-mode: screen;
+}
+
 .container {
   width: min(900px, 92vw);
   margin: 2rem auto 4rem;
+  position: relative;
+  z-index: 1;
 }
 
 .hero h1 {
@@ -39,8 +56,8 @@ body {
 
 .release {
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 0.9rem;
+  border-radius: 24px;
+  padding: 32px;
   background: #121212;
 }
 
