@@ -2,7 +2,6 @@ const API_URL = "https://api.github.com/repos/zakutskii/Unicore-updates/releases
 
 const releasesRoot = document.getElementById("releases");
 const statusEl = document.getElementById("status");
-const refreshBtn = document.getElementById("refresh");
 const template = document.getElementById("release-template");
 
 function fmtDate(value) {
@@ -55,7 +54,6 @@ function renderReleases(items) {
 async function loadReleases() {
   try {
     setStatus("Loading releases...");
-    refreshBtn.disabled = true;
 
     const response = await fetch(API_URL, {
       headers: {
@@ -77,10 +75,7 @@ async function loadReleases() {
     message.textContent = `Failed to load releases: ${error.message}`;
     releasesRoot.appendChild(message);
     setStatus("Error loading releases");
-  } finally {
-    refreshBtn.disabled = false;
   }
 }
 
-refreshBtn.addEventListener("click", loadReleases);
 loadReleases();
