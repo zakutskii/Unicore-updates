@@ -1,7 +1,6 @@
 const API_URL = "https://api.github.com/repos/zakutskii/Unicore-updates/releases?per_page=50";
 
 const releasesRoot = document.getElementById("releases");
-const statusEl = document.getElementById("status");
 const template = document.getElementById("release-template");
 
 function fmtDate(value) {
@@ -12,10 +11,6 @@ function fmtDate(value) {
     hour: "2-digit",
     minute: "2-digit",
   });
-}
-
-function setStatus(text) {
-  if (statusEl) statusEl.textContent = text;
 }
 
 function showError(message) {
@@ -95,14 +90,11 @@ async function fetchReleases() {
 
 async function loadReleases() {
   try {
-    setStatus("Loading releases...");
     const releases = await fetchReleases();
     renderReleases(releases);
-    setStatus(`Last updated: ${new Date().toLocaleTimeString()}`);
   } catch (error) {
     const reason = error instanceof Error ? error.message : String(error);
     showError(`Failed to load releases: ${reason}`);
-    setStatus("Error loading releases");
   }
 }
 
