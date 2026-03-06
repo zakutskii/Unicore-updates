@@ -31,24 +31,17 @@ body {
   line-height: 1.1;
 }
 
-.panel {
-  margin-top: 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  background: var(--panel);
-  padding: 1rem;
-}
-
 .releases {
   display: grid;
   gap: 0.9rem;
+  margin-top: 1.5rem;
 }
 
 .release {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 0.9rem;
-  background: #000000;
+  background: #121212;
 }
 
 .release h3 {
